@@ -1,0 +1,30 @@
+{
+	"in_cse":{
+		"ip":"YOUR_IP",
+		"port":3000,
+		"route":{
+			"WEB_DATA":"WEB_DATA",
+			"WEB_CONTROL":"WEB_CONTROL"
+		}
+	},
+	"mn_cse":{
+		"ip":"YOUR_IP",
+		"port":3300, 
+		"route":{
+			"FEED_GATEWAY":"FEED_GATEWAY"
+		}
+	},
+	"sim_env":{
+		"ip": "YOUR_IP",
+		"port":3330,
+		"interval": 3,
+		"route":{
+			"FEED":"feed",
+			"STATUS":"status"
+		}
+	},
+	"pen_ids": ["PEN_1", "PEN_2"],
+	"water_threshold": 20,
+	"food_threshold": 20
+}
+

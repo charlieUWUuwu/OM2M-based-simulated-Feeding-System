@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AE Data Display</title>
+    <!-- 引入 Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="container mt-4">
+    <h2>AE Data Display</h2>
+
+    <div class="row">
+        <!-- AE 1 -->
+        <div class="col-md-6 mb-4 ">
+            <h4>PEN_1</h4>
+            <p>Water: <span id="water1">{{ data_show['PEN_1']['water'] }} </span></p>
+            <p>Food: <span id="food1">{{ data_show['PEN_1']['food'] }} </span></p>
+            <button class="btn btn-primary" id="water1_btn">Add Water</button>
+            <button class="btn btn-success" id="food1_btn">Add Food</button>
+            <p><span id="warning1" style="color: red; font-weight: bold;">{{ data_show['PEN_1']["warning"] }}</span></p>
+        </div>
+        
+
+        <!-- AE 2 -->
+        <div class="col-md-6 mb-4 ">
+            <h4>PEN_2</h4>
+            <p>Water: <span id="water2">{{ data_show['PEN_2']['water'] }}</span></p>
+            <p>Food: <span id="food2">{{ data_show['PEN_2']['food'] }}</span></p>
+            <button class="btn btn-primary" id="water2_btn">Add Water</button>
+            <button class="btn btn-success" id="food2_btn">Add Food</button>
+            <p><span id="warning2" style="color: red; font-weight: bold;">{{ data_show['PEN_2']["warning"] }}</span></p>
+        </div>
+    </div>
+    
+
+</div>
+
+<!-- 引入 Bootstrap JS 與 jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    function updateDisplay() {
+        $.ajax({
+            url: '/getDisplayData',  // 與後端約定的 API 路由
+            method: 'GET',
+            success: function(data) {
+                // 更新顯示資料
+                updateElement('water1', data['PEN_1']['water']);
+                updateElement('food1', data['PEN_1']['food']);
+                updateElement('water2', data['PEN_2']['water']);
+                updateElement('food2', data['PEN_2']['food']);
+                updateElement('warning1', data['PEN_1']['warning']);
+                updateElement('warning2', data['PEN_2']['warning']);
+            }
+        });
+    }
+    
+    // 使用 setInterval 設定定時器，每 5 秒觸發一次 updateDisplay()
+    function updateElement(elementId, newValue) {
+        document.getElementById(elementId).innerText = newValue;
+    }
+    
+    // 初始化時啟動更新
+    updateDisplay();
+    setInterval(updateDisplay, 1000);
+</script>
+
+<script>
+    	// JavaScript 函數，用於模擬增加水和食物的操作
+        function handleButtonClick(penId, action) {
+            fetch('/button_click', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `penId=${penId}&action=${action}`
+            })
+            .then(response => response.text())
+            .then(data => {
+                console.log(data);
+                alert(`${penId} ${action} ！`);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+
+        document.getElementById('water1_btn').addEventListener('click', function () {
+            handleButtonClick('PEN_1', 'add_water');
+        });
+        document.getElementById('food1_btn').addEventListener('click', function () {
+            handleButtonClick('PEN_1', 'add_food');
+        });
+        document.getElementById('water2_btn').addEventListener('click', function () {
+            handleButtonClick('PEN_2', 'add_water');
+        });
+        document.getElementById('food2_btn').addEventListener('click', function () {
+            handleButtonClick('PEN_2', 'add_food');
+        });
+</script>
+
+</body>
+</html>
+

@@ -1,0 +1,20 @@
+version: "3.8"
+
+# 定義 service 的區塊，一個 service 設定可以用來啟動多個 container
+services:
+  in-cse:
+    image: 123charlie200/om2m_incse
+    volumes:
+      - ./in-config:/incse/configuration
+    restart: always
+    ports:
+      - 8080:8080
+
+  mn-cse:
+    image: 123charlie200/om2m_mncse
+    volumes:
+      - ./mn-config:/mncse/configuration
+    ports:
+      - 8282:8282
+    depends_on:  
+      - in-cse
