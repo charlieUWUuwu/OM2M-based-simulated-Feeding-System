@@ -45,8 +45,8 @@
 - `./mylibs/in_API.py` : 對 in-cse 發送 request 的相關操作
 - `./mylibs/mn_API.py` : 對 mn-cse 發送 request 的相關操作
 - `./mylibs/set_OM2M.py` : 建置所需之 AE、Container、Subscription 等資源在 OM2M Resource tree 的流程
-- `in_app.py` :
-- `mn_app.py` :
+- `in_app.py` : 處理前端按鈕事件、水/食物值的範圍檢查、獲取最新的資訊給前端
+- `mn_app.py` : 從模擬環境獲得資訊、接收餵食指令
 - `simulation_env.py` : 模擬農舍牲畜進食，水/食物自動減少的情況
 
 ## 系統架構
